@@ -63,7 +63,7 @@ export default {
   text-align: center;
 }
 
-/* 彩虹文字效果 */
+/* 彩虹文字基础样式 */
 .rainbow-text {
   font-size: 4em;
   background: linear-gradient(
@@ -82,9 +82,70 @@ export default {
   color: transparent;
   animation: 
     rainbow 5s linear infinite,
-    wave 4s cubic-bezier(0.445, 0.05, 0.55, 0.95) infinite;
+    snakeWave 12s cubic-bezier(0.645, 0.045, 0.355, 1.000) infinite;
   background-size: 200% 100%;
   display: inline-block;
+  position: relative;
+  letter-spacing: 4px;
+}
+
+/* 更自然的蛇形波浪动画 */
+@keyframes snakeWave {
+  0% {
+    transform: translate3d(0, 0, 0) skewX(0deg);
+  }
+  12.5% {
+    transform: translate3d(-10px, -8px, 0) skewX(-1deg);
+  }
+  25% {
+    transform: translate3d(-15px, -12px, 0) skewX(-2deg);
+  }
+  37.5% {
+    transform: translate3d(-10px, -8px, 0) skewX(-1deg);
+  }
+  50% {
+    transform: translate3d(0, 0, 0) skewX(0deg);
+  }
+  62.5% {
+    transform: translate3d(10px, 8px, 0) skewX(1deg);
+  }
+  75% {
+    transform: translate3d(15px, 12px, 0) skewX(2deg);
+  }
+  87.5% {
+    transform: translate3d(10px, 8px, 0) skewX(1deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) skewX(0deg);
+  }
+}
+
+/* 简化残影效果 */
+.rainbow-text::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  z-index: -1;
+  opacity: 0.08;
+  animation: snakeWave 12s cubic-bezier(0.645, 0.045, 0.355, 1.000) infinite;
+  animation-delay: -0.2s;
+}
+
+/* 优化动画过渡 */
+.rainbow-text {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 添加鼠标悬停效果 */
+.rainbow-text:hover {
+  transform: scale(1.05);
 }
 
 /* 彩虹动画 */
